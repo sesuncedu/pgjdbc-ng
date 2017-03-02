@@ -85,7 +85,7 @@ import org.junit.runners.Suite.SuiteClasses;
     WrapperTest.class,
     XmlTest.class,
     XADataSourceTest.class,
-  })
+    })
 public class RequiredTests {
 
 }

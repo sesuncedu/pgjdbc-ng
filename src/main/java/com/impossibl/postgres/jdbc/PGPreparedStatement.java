@@ -194,7 +194,7 @@ class PGPreparedStatement extends PGStatement implements PreparedStatement {
 
       try {
 
-        final CachedStatementKey key = new CachedStatementKey(sqlText, Collections.<Type> emptyList());
+        final CachedStatementKey key = new CachedStatementKey(sqlText, Collections.<Type>emptyList());
 
         cachedStatement = connection.getCachedStatement(key, new Callable<CachedStatement>() {
 
@@ -202,9 +202,9 @@ class PGPreparedStatement extends PGStatement implements PreparedStatement {
           public CachedStatement call() throws Exception {
 
             String name = connection.isCacheEnabled() ? CACHED_STATEMENT_PREFIX + Integer.toString(key.hashCode()) :
-              NO_CACHE_STATEMENT_PREFIX + Integer.toString(key.hashCode());
+                          NO_CACHE_STATEMENT_PREFIX + Integer.toString(key.hashCode());
 
-            PrepareCommand prep = connection.getProtocol().createPrepare(name, sqlText, Collections.<Type> emptyList());
+            PrepareCommand prep = connection.getProtocol().createPrepare(name, sqlText, Collections.<Type>emptyList());
 
             warningChain = connection.execute(prep, true);
 
@@ -685,70 +685,70 @@ class PGPreparedStatement extends PGStatement implements PreparedStatement {
       setNull(parameterIndex, Types.NULL);
     }
     else if (x instanceof Boolean) {
-      setBoolean(parameterIndex, ((Boolean)x).booleanValue());
+      setBoolean(parameterIndex, ((Boolean) x).booleanValue());
     }
     else if (x instanceof Byte) {
-      setByte(parameterIndex, ((Byte)x).byteValue());
+      setByte(parameterIndex, ((Byte) x).byteValue());
     }
     else if (x instanceof Short) {
-      setShort(parameterIndex, ((Short)x).shortValue());
+      setShort(parameterIndex, ((Short) x).shortValue());
     }
     else if (x instanceof Integer) {
-      setInt(parameterIndex, ((Integer)x).intValue());
+      setInt(parameterIndex, ((Integer) x).intValue());
     }
     else if (x instanceof Long) {
-      setLong(parameterIndex, ((Long)x).longValue());
+      setLong(parameterIndex, ((Long) x).longValue());
     }
     else if (x instanceof Float) {
-      setFloat(parameterIndex, ((Float)x).floatValue());
+      setFloat(parameterIndex, ((Float) x).floatValue());
     }
     else if (x instanceof Double) {
-      setDouble(parameterIndex, ((Double)x).doubleValue());
+      setDouble(parameterIndex, ((Double) x).doubleValue());
     }
     else if (x instanceof BigDecimal) {
-      setBigDecimal(parameterIndex, (BigDecimal)x);
+      setBigDecimal(parameterIndex, (BigDecimal) x);
     }
     else if (x instanceof String) {
-      setString(parameterIndex, (String)x);
+      setString(parameterIndex, (String) x);
     }
     else if (x instanceof byte[]) {
-      setBytes(parameterIndex, (byte[])x);
+      setBytes(parameterIndex, (byte[]) x);
     }
     else if (x instanceof Date) {
-      setDate(parameterIndex, (Date)x);
+      setDate(parameterIndex, (Date) x);
     }
     else if (x instanceof Time) {
-      setTime(parameterIndex, (Time)x);
+      setTime(parameterIndex, (Time) x);
     }
     else if (x instanceof Timestamp) {
-      setTimestamp(parameterIndex, (Timestamp)x);
+      setTimestamp(parameterIndex, (Timestamp) x);
     }
     else if (x instanceof InputStream) {
-      setBinaryStream(parameterIndex, (InputStream)x);
+      setBinaryStream(parameterIndex, (InputStream) x);
     }
     else if (x instanceof Blob) {
-      setBlob(parameterIndex, (Blob)x);
+      setBlob(parameterIndex, (Blob) x);
     }
     else if (x instanceof Clob) {
-      setClob(parameterIndex, (Clob)x);
+      setClob(parameterIndex, (Clob) x);
     }
     else if (x instanceof Array) {
-      setArray(parameterIndex, (Array)x);
+      setArray(parameterIndex, (Array) x);
     }
     else if (x instanceof URL) {
-      setURL(parameterIndex, (URL)x);
+      setURL(parameterIndex, (URL) x);
     }
     else if (x instanceof SQLXML) {
-      setSQLXML(parameterIndex, (SQLXML)x);
+      setSQLXML(parameterIndex, (SQLXML) x);
     }
     else if (x instanceof RowId) {
-      setRowId(parameterIndex, (RowId)x);
+      setRowId(parameterIndex, (RowId) x);
     }
     else if (x instanceof Ref) {
-      setRef(parameterIndex, (Ref)x);
+      setRef(parameterIndex, (Ref) x);
     }
     else if (x instanceof NClob) {
-      setNClob(parameterIndex, (NClob)x);
+      setNClob(parameterIndex, (NClob) x);
     }
     else {
       set(parameterIndex, x, Types.OTHER);
