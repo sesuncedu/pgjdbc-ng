@@ -1,30 +1,30 @@
-/**
- * Copyright (c) 2013, impossibl.com
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- *  * Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
- *  * Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- *  * Neither the name of impossibl.com nor the names of its contributors may
- *    be used to endorse or promote products derived from this software
- *    without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
- * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
- * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
+/*
+  Copyright (c) 2013, impossibl.com
+  All rights reserved.
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions are met:
+
+   * Redistributions of source code must retain the above copyright notice,
+     this list of conditions and the following disclaimer.
+   * Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in the
+     documentation and/or other materials provided with the distribution.
+   * Neither the name of impossibl.com nor the names of its contributors may
+     be used to endorse or promote products derived from this software
+     without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  POSSIBILITY OF SUCH DAMAGE.
  */
 /*-------------------------------------------------------------------------
  *
@@ -652,11 +652,11 @@ public class TimestampUtils {
     return (Calendar) cal.clone();
   }
 
-  /**
-   * Returns the SQL Date object matching the given bytes with
-   * {@link Oid#DATE}.
-   *
-   * @param tz The timezone used.
+  /*
+    Returns the SQL Date object matching the given bytes with
+    {@link Oid#DATE}.
+
+    @param tz The timezone used.
    * @param bytes The binary encoded date value.
    * @return The parsed date object.
    * @throws PSQLException If binary format could not be parsed.
@@ -683,11 +683,11 @@ public class TimestampUtils {
 //        return new Date(millis - offset);
 //    }
 
-  /**
-   * Returns the SQL Time object matching the given bytes with
-   * {@link Oid#TIME} or {@link Oid#TIMETZ}.
-   *
-   * @param tz The timezone used when received data is {@link Oid#TIME},
+  /*
+    Returns the SQL Time object matching the given bytes with
+    {@link Oid#TIME} or {@link Oid#TIMETZ}.
+
+    @param tz The timezone used when received data is {@link Oid#TIME},
    * ignored if data already contains {@link Oid#TIMETZ}.
    * @param bytes The binary encoded time value.
    * @return The parsed time object.
@@ -727,11 +727,11 @@ public class TimestampUtils {
 //        return new Time(millis);
 //    }
 
-  /**
-   * Returns the SQL Timestamp object matching the given bytes with
-   * {@link Oid#TIMESTAMP} or {@link Oid#TIMESTAMPTZ}.
-   *
-   * @param tz The timezone used when received data is {@link Oid#TIMESTAMP},
+  /*
+    Returns the SQL Timestamp object matching the given bytes with
+    {@link Oid#TIMESTAMP} or {@link Oid#TIMESTAMPTZ}.
+
+    @param tz The timezone used when received data is {@link Oid#TIMESTAMP},
    * ignored if data already contains {@link Oid#TIMESTAMPTZ}.
    * @param bytes The binary encoded timestamp value.
    * @param timestamptz True if the binary is in GMT.
@@ -794,10 +794,10 @@ public class TimestampUtils {
 //        return ts;
 //    }
 
-  /**
-   * Extracts the date part from a timestamp.
-   *
-   * @param timestamp The timestamp from which to extract the date.
+  /*
+    Extracts the date part from a timestamp.
+
+    @param timestamp The timestamp from which to extract the date.
    * @param tz The time zone of the date.
    * @return The extracted date.
    */
@@ -850,9 +850,9 @@ public class TimestampUtils {
     return new Time(millis);
   }
 
-  /**
-   * Returns the given time value as String matching what the
-   * current postgresql server would send in text mode.
+  /*
+    Returns the given time value as String matching what the
+    current postgresql server would send in text mode.
    */
 //    public String timeToString(java.util.Date time) {
 //        long millis = time.getTime();
@@ -865,13 +865,13 @@ public class TimestampUtils {
 //        return time.toString();
 //    }
 
-  /**
-   * Converts the given postgresql seconds to java seconds.
-   * Reverse engineered by inserting varying dates to postgresql
-   * and tuning the formula until the java dates matched.
-   * See {@link #toPgSecs} for the reverse operation.
-   *
-   * @param secs Postgresql seconds.
+  /*
+    Converts the given postgresql seconds to java seconds.
+    Reverse engineered by inserting varying dates to postgresql
+    and tuning the formula until the java dates matched.
+    See {@link #toPgSecs} for the reverse operation.
+
+    @param secs Postgresql seconds.
    * @return Java seconds.
    */
 //    private static long toJavaSecs(long secs) {
@@ -891,12 +891,12 @@ public class TimestampUtils {
 //        return secs;
 //    }
 
-  /**
-   * Converts the given java seconds to postgresql seconds.
-   * See {@link #toJavaSecs} for the reverse operation.
-   * The conversion is valid for any year 100 BC onwards.
-   *
-   * @param secs Postgresql seconds.
+  /*
+    Converts the given java seconds to postgresql seconds.
+    See {@link #toJavaSecs} for the reverse operation.
+    The conversion is valid for any year 100 BC onwards.
+
+    @param secs Postgresql seconds.
    * @return Java seconds.
    */
 //     private static long toPgSecs(long secs) {
@@ -917,10 +917,10 @@ public class TimestampUtils {
 //        return secs;
 //    }
 
-  /**
-   * Converts the SQL Date to binary representation for {@link Oid#DATE}.
-   *
-   * @param tz The timezone used.
+  /*
+    Converts the SQL Date to binary representation for {@link Oid#DATE}.
+
+    @param tz The timezone used.
    * @param bytes The binary encoded date value.
    * @throws PSQLException If binary format could not be parsed.
    */
