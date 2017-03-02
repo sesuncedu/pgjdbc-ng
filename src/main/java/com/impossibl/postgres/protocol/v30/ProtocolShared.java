@@ -192,7 +192,7 @@ class NamedThreadFactory implements ThreadFactory {
   private String baseName;
   private AtomicInteger idx = new AtomicInteger(1);
 
-  public NamedThreadFactory(String baseName) {
+  NamedThreadFactory(String baseName) {
     super();
     this.baseName = baseName;
   }

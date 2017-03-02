@@ -145,7 +145,7 @@ public class PGConnectionImpl extends BasicContext implements PGConnection {
     StackTraceElement[] allocationStackTrace;
     String connectionInfo;
 
-    public Cleanup(Protocol protocol, Housekeeper.Ref housekeeper, List<WeakReference<PGStatement>> statements, String connectionInfo) {
+    Cleanup(Protocol protocol, Housekeeper.Ref housekeeper, List<WeakReference<PGStatement>> statements, String connectionInfo) {
       this.protocol = protocol;
       this.housekeeper = housekeeper;
       this.statements = statements;
@@ -1375,7 +1375,7 @@ class CachedStatementKey {
   String sql;
   List<Type> parameterTypes;
 
-  public CachedStatementKey(String sql, List<Type> parameterTypes) {
+  CachedStatementKey(String sql, List<Type> parameterTypes) {
     this.sql = sql;
     this.parameterTypes = parameterTypes;
   }
@@ -1421,7 +1421,7 @@ class CachedStatement {
   List<Type> parameterTypes;
   List<ResultField> resultFields;
 
-  public CachedStatement(String statementName, List<Type> parameterTypes, List<ResultField> resultFields) {
+  CachedStatement(String statementName, List<Type> parameterTypes, List<ResultField> resultFields) {
     this.name = statementName;
     this.parameterTypes = parameterTypes;
     this.resultFields = resultFields;

@@ -52,14 +52,14 @@ abstract class Networks extends SimpleProcProvider {
   }
 
   // http://git.postgresql.org/gitweb/?p=postgresql.git;a=blob;f=src/include/utils/inet.h;h=3d8e31c31c83d5544ea170144b03b0357cd77b2b;hb=HEAD
-  public Networks(String pgtype, NetworkObjectFactory<? extends InetAddr> nof) {
+  Networks(String pgtype, NetworkObjectFactory<? extends InetAddr> nof) {
     super(new TxtEncoder(nof), new TxtDecoder(nof), new BinEncoder(nof), new BinDecoder(nof), pgtype);
   }
 
   static class BinDecoder extends BinaryDecoder {
     private NetworkObjectFactory<? extends InetAddr> nof;
 
-    public BinDecoder(NetworkObjectFactory<? extends InetAddr> nof) {
+    BinDecoder(NetworkObjectFactory<? extends InetAddr> nof) {
       this.nof = nof;
     }
 
@@ -115,7 +115,7 @@ abstract class Networks extends SimpleProcProvider {
   static class BinEncoder extends BinaryEncoder {
     private NetworkObjectFactory<? extends InetAddr> nof;
 
-    public BinEncoder(NetworkObjectFactory<? extends InetAddr> nof) {
+    BinEncoder(NetworkObjectFactory<? extends InetAddr> nof) {
       this.nof = nof;
     }
 
@@ -151,7 +151,7 @@ abstract class Networks extends SimpleProcProvider {
   static class TxtDecoder extends TextDecoder {
     private NetworkObjectFactory<? extends InetAddr> nof;
 
-    public TxtDecoder(NetworkObjectFactory<? extends InetAddr> nof) {
+    TxtDecoder(NetworkObjectFactory<? extends InetAddr> nof) {
       this.nof = nof;
     }
 
@@ -180,7 +180,7 @@ abstract class Networks extends SimpleProcProvider {
   static class TxtEncoder extends TextEncoder {
     private NetworkObjectFactory<? extends InetAddr> nof;
 
-    public TxtEncoder(NetworkObjectFactory<? extends InetAddr> nof) {
+    TxtEncoder(NetworkObjectFactory<? extends InetAddr> nof) {
       this.nof = nof;
     }
 

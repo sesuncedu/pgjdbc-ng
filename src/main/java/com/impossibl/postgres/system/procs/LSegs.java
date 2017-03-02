@@ -83,7 +83,7 @@ public class LSegs extends SimpleProcProvider {
   static class BinDecoder extends BinaryDecoder {
     private PrimitiveType pt;
 
-    public BinDecoder(PrimitiveType pt) {
+    BinDecoder(PrimitiveType pt) {
       this.pt = pt;
     }
 
@@ -115,7 +115,7 @@ public class LSegs extends SimpleProcProvider {
   static class BinEncoder extends BinaryEncoder {
     private PrimitiveType pt;
 
-    public BinEncoder(PrimitiveType pt) {
+    BinEncoder(PrimitiveType pt) {
       this.pt = pt;
     }
 

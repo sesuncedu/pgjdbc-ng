@@ -62,12 +62,12 @@ class Locator {
   private int typeId;
   private Registry registry;
 
-  public Locator(int typeId, Registry registry) {
+  Locator(int typeId, Registry registry) {
     this.typeId = typeId;
     this.registry = registry;
   }
 
-  public Type locate() {
+  Type locate() {
     return registry.loadType(typeId);
   }
 
