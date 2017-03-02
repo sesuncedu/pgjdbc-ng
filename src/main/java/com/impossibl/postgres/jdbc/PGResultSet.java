@@ -124,7 +124,7 @@ class PGResultSet implements ResultSet {
     QueryCommand command;
     StackTraceElement[] allocationStackTrace;
 
-    public Cleanup(PGStatement statement, QueryCommand command) {
+    Cleanup(PGStatement statement, QueryCommand command) {
       this.statement = statement;
       this.command = command;
       this.allocationStackTrace = new Exception().getStackTrace();

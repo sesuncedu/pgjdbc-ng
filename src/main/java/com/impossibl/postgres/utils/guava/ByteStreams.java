@@ -136,24 +136,29 @@ public final class ByteStreams {
   }
 
   private static final OutputStream NULL_OUTPUT_STREAM =
-      new OutputStream() {
-        /** Discards the specified byte. */
-        @Override public void write(int b) {
-        }
-        /** Discards the specified byte array. */
-        @Override public void write(byte[] b) {
-          checkNotNull(b);
-        }
-        /** Discards the specified byte array. */
-        @Override public void write(byte[] b, int off, int len) {
-          checkNotNull(b);
-        }
+    new OutputStream() {
+      /** Discards the specified byte. */
+      @Override
+      public void write(int b) {
+      }
 
-        @Override
-        public String toString() {
-          return "ByteStreams.nullOutputStream()";
-        }
-      };
+      /** Discards the specified byte array. */
+      @Override
+      public void write(byte[] b) {
+        checkNotNull(b);
+      }
+
+      /** Discards the specified byte array. */
+      @Override
+      public void write(byte[] b, int off, int len) {
+        checkNotNull(b);
+      }
+
+      @Override
+      public String toString() {
+        return "ByteStreams.nullOutputStream()";
+      }
+    };
 
   /**
    * Returns an {@link OutputStream} that simply discards written bytes.

@@ -106,7 +106,7 @@ public class TimestampUtils {
    * returning the fractional seconds.
    */
   private ParsedTimestamp loadCalendar(Calendar defaultTz, String str, String type) throws SQLException {
-    char []s = str.toCharArray();
+    char[] s = str.toCharArray();
     int slen = s.length;
 
     // This is pretty gross..
@@ -608,7 +608,7 @@ public class TimestampUtils {
     }
   }
 
-  private static int skipWhitespace(char []s, int start) {
+  private static int skipWhitespace(char[] s, int start) {
     int slen = s.length;
     for (int i = start; i < slen; i++) {
       if (!Character.isSpaceChar(s[i]))
@@ -617,7 +617,7 @@ public class TimestampUtils {
     return slen;
   }
 
-  private static int firstNonDigit(char []s, int start) {
+  private static int firstNonDigit(char[] s, int start) {
     int slen = s.length;
     for (int i = start; i < slen; i++) {
       if (!Character.isDigit(s[i])) {
@@ -627,7 +627,7 @@ public class TimestampUtils {
     return slen;
   }
 
-  private static int number(char []s, int start, int end) {
+  private static int number(char[] s, int start, int end) {
     if (start >= end) {
       throw new NumberFormatException();
     }
@@ -638,7 +638,7 @@ public class TimestampUtils {
     return n;
   }
 
-  private static char charAt(char []s, int pos) {
+  private static char charAt(char[] s, int pos) {
     if (pos >= 0 && pos < s.length) {
       return s[pos];
     }

@@ -98,7 +98,7 @@ public class CodecTest {
 
     conn = (PGConnectionImpl) TestUtil.openDB();
 
-    TestUtil.createType(conn, "teststruct" , "str text, str2 text, id uuid, num float");
+    TestUtil.createType(conn, "teststruct", "str text, str2 text, id uuid, num float");
     TestUtil.createType(conn, "teststructany", "anytype float");
   }
 

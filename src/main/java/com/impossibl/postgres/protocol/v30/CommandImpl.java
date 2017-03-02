@@ -139,7 +139,7 @@ public abstract class CommandImpl implements Command {
 
     ProtocolImpl protocol;
 
-    public CancelExecutionTimerTask(ProtocolImpl protocol) {
+    CancelExecutionTimerTask(ProtocolImpl protocol) {
       this.protocol = protocol;
     }
 

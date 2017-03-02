@@ -77,7 +77,7 @@ abstract class PGStatement implements Statement {
     List<WeakReference<PGResultSet>> resultSets;
     StackTraceElement[] allocationStackTrace;
 
-    public Cleanup(PGConnectionImpl connection, String name, List<WeakReference<PGResultSet>> resultSets) {
+    Cleanup(PGConnectionImpl connection, String name, List<WeakReference<PGResultSet>> resultSets) {
       this.connection = connection;
       this.name = name;
       this.resultSets = resultSets;

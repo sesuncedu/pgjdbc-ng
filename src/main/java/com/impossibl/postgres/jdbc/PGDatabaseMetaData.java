@@ -1773,8 +1773,7 @@ class PGDatabaseMetaData implements DatabaseMetaData {
     return execForResultSet(sql.toString(), params);
   }
 
-  protected ResultSet getImportedExportedKeys(String primaryCatalog, String primarySchema, String primaryTable, String foreignCatalog, String foreignSchema, String foreignTable) throws SQLException
-  {
+  protected ResultSet getImportedExportedKeys(String primaryCatalog, String primarySchema, String primaryTable, String foreignCatalog, String foreignSchema, String foreignTable) throws SQLException {
     StringBuilder sql = new StringBuilder();
     List<Object> params = new ArrayList<>();
 

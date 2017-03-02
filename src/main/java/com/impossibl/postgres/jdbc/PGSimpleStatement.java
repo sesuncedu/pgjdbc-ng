@@ -56,7 +56,7 @@ class PGSimpleStatement extends PGStatement {
 
   SQLText batchCommands;
 
-  public PGSimpleStatement(PGConnectionImpl connection, int type, int concurrency, int holdability) {
+  PGSimpleStatement(PGConnectionImpl connection, int type, int concurrency, int holdability) {
     super(connection, type, concurrency, holdability, null, null);
   }
 
