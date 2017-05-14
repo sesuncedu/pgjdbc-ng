@@ -28,6 +28,7 @@
  */
 package com.impossibl.postgres.system;
 
+import com.impossibl.postgres.api.jdbc.PGNotificationListener;
 import com.impossibl.postgres.datetime.DateTimeFormat;
 import com.impossibl.postgres.datetime.ISODateFormat;
 import com.impossibl.postgres.datetime.ISOTimeFormat;
@@ -129,7 +130,7 @@ public class BasicContext implements Context {
   protected Version serverVersion;
   protected KeyData keyData;
   protected Protocol protocol;
-  protected Map<NotificationKey, NotificationListener> notificationListeners;
+  protected Map<NotificationKey, PGNotificationListener> notificationListeners;
   protected Map<String, PreparedQuery> utilQueries;
 
 
@@ -686,7 +687,7 @@ public class BasicContext implements Context {
 
   }
 
-  public void addNotificationListener(String name, String channelNameFilter, NotificationListener listener) {
+  public void addNotificationListener(String name, String channelNameFilter, PGNotificationListener listener) {
 
     name = nullToEmpty(name);
     channelNameFilter = channelNameFilter != null ? channelNameFilter : ".*";
@@ -698,14 +699,14 @@ public class BasicContext implements Context {
     notificationListeners.put(key, listener);
   }
 
-  public synchronized void removeNotificationListener(NotificationListener listener) {
+  public synchronized void removeNotificationListener(PGNotificationListener listener) {
 
-    Iterator<Map.Entry<NotificationKey, NotificationListener>> iter = notificationListeners.entrySet().iterator();
+    Iterator<Map.Entry<NotificationKey, PGNotificationListener>> iter = notificationListeners.entrySet().iterator();
     while (iter.hasNext()) {
 
-      Map.Entry<NotificationKey, NotificationListener> entry = iter.next();
+      Map.Entry<NotificationKey, PGNotificationListener> entry = iter.next();
 
-      NotificationListener iterListener = entry.getValue();
+      PGNotificationListener iterListener = entry.getValue();
       if (iterListener == null || iterListener.equals(listener)) {
 
         iter.remove();
@@ -716,13 +717,13 @@ public class BasicContext implements Context {
 
   public synchronized void removeNotificationListener(String listenerName) {
 
-    Iterator<Map.Entry<NotificationKey, NotificationListener>> iter = notificationListeners.entrySet().iterator();
+    Iterator<Map.Entry<NotificationKey, PGNotificationListener>> iter = notificationListeners.entrySet().iterator();
     while (iter.hasNext()) {
 
-      Map.Entry<NotificationKey, NotificationListener> entry = iter.next();
+      Map.Entry<NotificationKey, PGNotificationListener> entry = iter.next();
 
       String iterListenerName = entry.getKey().name;
-      NotificationListener iterListener = entry.getValue();
+      PGNotificationListener iterListener = entry.getValue();
       if (iterListenerName.equals(listenerName) || iterListener == null) {
 
         iter.remove();
@@ -734,12 +735,12 @@ public class BasicContext implements Context {
   @Override
   public synchronized void reportNotification(int processId, String channelName, String payload) {
 
-    Iterator<Map.Entry<NotificationKey, NotificationListener>> iter = notificationListeners.entrySet().iterator();
+    Iterator<Map.Entry<NotificationKey, PGNotificationListener>> iter = notificationListeners.entrySet().iterator();
     while (iter.hasNext()) {
 
-      Map.Entry<NotificationKey, NotificationListener> entry = iter.next();
+      Map.Entry<NotificationKey, PGNotificationListener> entry = iter.next();
 
-      NotificationListener listener = entry.getValue();
+      PGNotificationListener listener = entry.getValue();
       if (entry.getKey().channelNameFilter.matcher(channelName).matches()) {
 
         listener.notification(processId, channelName, payload);

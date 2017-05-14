@@ -28,7 +28,6 @@
  */
 package com.impossibl.postgres.osgi;
 
-import com.impossibl.postgres.jdbc.AbstractDataSource;
 import com.impossibl.postgres.jdbc.PGConnectionPoolDataSource;
 import com.impossibl.postgres.jdbc.PGDataSource;
 import com.impossibl.postgres.jdbc.PGDriver;
@@ -37,7 +36,11 @@ import com.impossibl.postgres.jdbc.xa.PGXADataSource;
 import java.sql.Driver;
 import java.sql.SQLException;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import javax.naming.Reference;
+import javax.naming.StringRefAddr;
 import javax.sql.ConnectionPoolDataSource;
 import javax.sql.DataSource;
 import javax.sql.XADataSource;
@@ -46,20 +49,59 @@ import org.osgi.service.jdbc.DataSourceFactory;
 
 public class PGJDBCDataSourceFactory implements DataSourceFactory {
 
+  private static final Pattern URL_PATTERN = Pattern.compile("jdbc:pgsql:(?://([^:/]+)(?::([0-9]+))?)?/([^?]+)");
+  private static final Pattern OFFICIAL_URL_PATTERN =
+      Pattern.compile("jdbc:pgsql:(?://((?:[a-zA-Z0-9\\-\\.]+|\\[[0-9a-f\\:]+\\])(?:\\:(?:\\d+))?(?:,(?:[a-zA-Z0-9\\-\\.]+|\\[[0-9a-f\\:]+\\])(?:\\:(?:\\d+))?)*)/)?((?:\\w|-|_)+)(?:[\\?\\&](.*))?");
+
+  private static Reference propertiesToReference(Properties props) {
+    Reference ref = new Reference(PGJDBCDataSourceFactory.class.toString());
+
+    for (String key : props.stringPropertyNames()) {
+      String value = props.getProperty(key);
+      if (ref.get(key) == null) {
+        ref.add(new StringRefAddr(key, value));
+      }
+    }
+    String url = props.getProperty(JDBC_URL);
+    if (url != null) {
+      Matcher matcher = URL_PATTERN.matcher(url);
+      if (!matcher.matches()) {
+        throw new IllegalArgumentException("Invalid URL: " + url);
+      }
+      String host = matcher.group(1);
+      String port = matcher.group(2);
+      String database = matcher.group(3);
+      if (host != null && !props.contains(JDBC_SERVER_NAME)) {
+        ref.add(new StringRefAddr(JDBC_SERVER_NAME, host));
+      }
+      if (port != null && !props.contains(JDBC_PORT_NUMBER)) {
+        ref.add(new StringRefAddr(JDBC_PORT_NUMBER, port));
+      }
+      if (database != null && !props.contains(JDBC_DATABASE_NAME) && !props.contains("database")) {
+        ref.add(new StringRefAddr("database", database));
+      }
+    }
+
+    String dbName = props.getProperty(JDBC_DATABASE_NAME);
+    if (dbName != null) {
+      ref.add(new StringRefAddr("database", dbName));
+    }
+    return ref;
+  }
+
   @Override
   public DataSource createDataSource(final Properties properties) throws SQLException {
     final PGDataSource dataSource = new PGDataSource();
-    configureDatasource(dataSource, properties);
+    dataSource.init(propertiesToReference(properties));
 
     return dataSource;
   }
-
 
   @Override
   public ConnectionPoolDataSource createConnectionPoolDataSource(Properties properties)
       throws SQLException {
     PGConnectionPoolDataSource connectionPoolDataSource = new PGConnectionPoolDataSource();
-    configureDatasource(connectionPoolDataSource, properties);
+    connectionPoolDataSource.init(propertiesToReference(properties));
     return connectionPoolDataSource;
   }
 
@@ -67,36 +109,16 @@ public class PGJDBCDataSourceFactory implements DataSourceFactory {
   public XADataSource createXADataSource(Properties properties) throws SQLException {
 
     PGXADataSource xaDataSource = new PGXADataSource();
-    configureDatasource(xaDataSource, properties);
+    xaDataSource.init(propertiesToReference(properties));
 
     return xaDataSource;
   }
 
   @Override
   public Driver createDriver(Properties properties) throws SQLException {
+    if (properties != null && !properties.isEmpty()) {
+      throw new SQLException("PGJDBC Driver creation does accept any configuration properties but was given: " + properties.toString());
+    }
     return new PGDriver();
   }
-
-  private static void configureDatasource(AbstractDataSource dataSource, Properties properties) {
-    properties.forEach((k, v) -> {
-      switch (String.valueOf(k)) {
-        case DataSourceFactory.JDBC_SERVER_NAME:
-          dataSource.setHost((String) v);
-          break;
-        case DataSourceFactory.JDBC_PORT_NUMBER:
-          dataSource.setPort((Integer) v);
-          break;
-        case DataSourceFactory.JDBC_DATABASE_NAME:
-          dataSource.setDatabase((String) v);
-          break;
-        case DataSourceFactory.JDBC_USER:
-          dataSource.setUser((String) v);
-          break;
-        case DataSourceFactory.JDBC_PASSWORD:
-          dataSource.setPassword((String) v);
-          break;
-      }
-    });
-  }
-
 }

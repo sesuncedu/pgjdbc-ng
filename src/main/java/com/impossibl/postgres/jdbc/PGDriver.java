@@ -28,11 +28,10 @@
  */
 package com.impossibl.postgres.jdbc;
 
-import com.impossibl.postgres.api.jdbc.PGConnection;
 import com.impossibl.postgres.protocol.v30.ProtocolShared;
-import com.impossibl.postgres.system.Context;
 import com.impossibl.postgres.system.Version;
 
+import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverAction;
 import java.sql.DriverManager;
@@ -52,7 +51,8 @@ import java.util.logging.Logger;
  */
 public class PGDriver implements Driver, DriverAction {
   /** The version of the driver */
-  public static final Version VERSION = Version.get(0, 1, 0);
+  public static final Version VERSION = Version.get(0, 8, 0);
+  public static final String NAME = "PostgreSQL JDBC - NG";
 
   public static final Logger logger = Logger.getLogger(PGDriver.class.getName());
 
@@ -74,7 +74,7 @@ public class PGDriver implements Driver, DriverAction {
   }
 
   @Override
-  public PGConnection connect(String url, Properties info) throws SQLException {
+  public Connection connect(String url, Properties info) throws SQLException {
     return ConnectionUtil.createConnection(url, info, true);
   }
 
@@ -120,7 +120,7 @@ public class PGDriver implements Driver, DriverAction {
 
   @Override
   public Logger getParentLogger() throws SQLFeatureNotSupportedException {
-    return Logger.getLogger(Context.class.getPackage().getName());
+    return logger.getParent();
   }
 
   @Override

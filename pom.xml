@@ -103,16 +103,13 @@
       <groupId>org.osgi</groupId>
       <artifactId>osgi.cmpn</artifactId>
       <version>6.0.0</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.osgi</groupId>
       <artifactId>osgi.core</artifactId>
       <version>6.0.0</version>
-    </dependency>
-    <dependency>
-      <groupId>org.osgi</groupId>
-      <artifactId>osgi.enterprise</artifactId>
-      <version>6.0.0</version>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
 
@@ -185,7 +182,6 @@
             <exclude>**/SSL*.java</exclude>
             <exclude>**/ServerDisconnectTest.java</exclude>
           </excludes>
-          <skip>true</skip>
         </configuration>
       </plugin>
       <plugin>
@@ -207,9 +203,13 @@
           <instructions>
             <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
             <Bundle-Activator>com.impossibl.postgres.osgi.Activator</Bundle-Activator>
-            <!-- do not import ourself -->
+            <Export-Package>com.impossibl.postgres.api.*,
+              com.impossibl.postgres.jdbc;include:="PGDriver",
+              org.osgi.service.jdbc
+            </Export-Package>
+            <Private-Package>{local-packages}</Private-Package>
             <Import-Package>
-              *
+             javax.transaction.*;resolution:=optional,*
             </Import-Package>
           </instructions>
         </configuration>
@@ -227,10 +227,16 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>3.0.2</version>
+      </plugin>
 
     </plugins>
     <pluginManagement>
       <plugins>
+
         <!-- Checkstyle -->
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -240,7 +246,7 @@
             <configLocation>src/support/checkstyle.xml</configLocation>
             <sourceDirectory>.</sourceDirectory>
             <consoleOutput>true</consoleOutput>
-            <failsOnError>true</failsOnError>
+            <failsOnError>false</failsOnError>
             <useFile/>
             <excludes>src/main/java/com/impossibl/postgres/utils/guava/**</excludes>
           </configuration>

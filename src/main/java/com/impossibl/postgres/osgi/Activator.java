@@ -30,6 +30,8 @@ package com.impossibl.postgres.osgi;
 
 import com.impossibl.postgres.jdbc.PGDriver;
 
+import java.sql.Driver;
+import java.sql.SQLException;
 import java.util.Hashtable;
 
 import org.osgi.framework.BundleActivator;
@@ -45,21 +47,23 @@ public class Activator implements BundleActivator {
   private ServiceRegistration<DataSourceFactory> serviceRegistration;
 
   @Override
-  public void start(BundleContext context) {
-    this.logTracker = new ServiceTracker<>(context, LogService.class.toString(), null);
+  public void start(BundleContext context) throws SQLException {
+    System.out.println("context = " + context);
+    this.logTracker = new ServiceTracker<>(context, LogService.class.getName(), null);
     LogService logger = logTracker.getService();
     if (logger != null) {
       logger.log(LogService.LOG_DEBUG, "Registering PGJDBC JDBC Provider with OSGI");
     }
-    Hashtable<String, Object> props = new Hashtable<>();
-    props.put(DataSourceFactory.OSGI_JDBC_DRIVER_CLASS, PGDriver.class);
-    props.put(DataSourceFactory.OSGI_JDBC_DRIVER_NAME, "PGJDBC");
-    props.put(DataSourceFactory.OSGI_JDBC_DRIVER_VERSION, "0.8");
     PGJDBCDataSourceFactory dataSourceFactory = new PGJDBCDataSourceFactory();
+    Driver driver = dataSourceFactory.createDriver(null);
+    Hashtable<String, Object> props = new Hashtable<>();
+    props.put(DataSourceFactory.OSGI_JDBC_DRIVER_CLASS, PGDriver.class.getName());
+    props.put(DataSourceFactory.OSGI_JDBC_DRIVER_NAME, PGDriver.NAME);
+    props.put(DataSourceFactory.OSGI_JDBC_DRIVER_VERSION, PGDriver.VERSION.toString());
     serviceRegistration =
         context.registerService(DataSourceFactory.class, dataSourceFactory, props);
     if (logger != null) {
-      logger.log(LogService.LOG_DEBUG, "Registered PGJDBC JDBC Provider with OSGI");
+      logger.log(LogService.LOG_INFO, "Registered PGJDBC JDBC Provider with OSGI");
     }
   }
 
@@ -68,7 +72,7 @@ public class Activator implements BundleActivator {
     serviceRegistration.unregister();
     LogService logger = logTracker.getService();
     if (logger != null) {
-      logger.log(LogService.LOG_DEBUG, "Unregistered PGJDBC JDBC Provider with OSGI");
+      logger.log(LogService.LOG_INFO, "Unregistered PGJDBC JDBC Provider with OSGI");
     }
     logTracker.close();
   }
